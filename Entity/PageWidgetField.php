@@ -3,6 +3,7 @@
 namespace Cekurte\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * PageWidgetField
@@ -20,6 +21,14 @@ class PageWidgetField
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"title"}, updatable=false, separator="_")
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     */
+    private $slug;
 
     /**
      * @var \PageWidgetType
@@ -55,8 +64,14 @@ class PageWidgetField
     /**
      * Construct
      */
-    public function __construct()
+    public function __construct(PageWidgetType $widgetType, $title, $description = null)
     {
+        $this
+            ->setWidgetType($widgetType)
+            ->setTitle($title)
+            ->setDescription($description)
+        ;
+
         $this->widgetCustomField = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -68,6 +83,29 @@ class PageWidgetField
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return PageWidgetField
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

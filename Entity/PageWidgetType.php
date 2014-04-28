@@ -22,16 +22,6 @@ class PageWidgetType
     private $id;
 
     /**
-     * @var \PageWidget
-     *
-     * @ORM\ManyToOne(targetEntity="PageWidget")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="page_widget_id", referencedColumnName="id", nullable=false)
-     * })
-     */
-    private $widget;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
@@ -55,8 +45,13 @@ class PageWidgetType
     /**
      * Construct
      */
-    public function __construct()
+    public function __construct($title, $description = null)
     {
+        $this
+            ->setTitle($title)
+            ->setDescription($description)
+        ;
+
         $this->widgetField = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -114,29 +109,6 @@ class PageWidgetType
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set widget
-     *
-     * @param \Cekurte\PageBundle\Entity\PageWidget $widget
-     * @return PageWidgetType
-     */
-    public function setWidget(\Cekurte\PageBundle\Entity\PageWidget $widget)
-    {
-        $this->widget = $widget;
-
-        return $this;
-    }
-
-    /**
-     * Get widget
-     *
-     * @return \Cekurte\PageBundle\Entity\PageWidget
-     */
-    public function getWidget()
-    {
-        return $this->widget;
     }
 
     /**

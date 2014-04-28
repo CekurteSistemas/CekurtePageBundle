@@ -50,6 +50,22 @@ class PageWidgetCustomField
     private $value;
 
     /**
+     * Construct
+     *
+     * @param PageWidget      $widget
+     * @param PageWidgetField $widgetField
+     * @param mixed           $value
+     */
+    public function __construct(PageWidget $widget, PageWidgetField $widgetField, $value)
+    {
+        $this
+            ->setWidget($widget)
+            ->setWidgetField($widgetField)
+            ->setValue($value)
+        ;
+    }
+
+    /**
      * Get id
      *
      * @return integer

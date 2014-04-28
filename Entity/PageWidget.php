@@ -59,9 +59,22 @@ class PageWidget
     /**
      * Construct
      */
-    public function __construct()
+    public function __construct(Page $page, PageWidgetType $widgetType)
     {
+        $this
+            ->setPage($page)
+            ->setWidgetType($widgetType)
+        ;
+
         $this->widgetCustomField = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->setActive(true);
     }
 
     /**

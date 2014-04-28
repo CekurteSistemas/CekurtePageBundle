@@ -1,0 +1,65 @@
+<?php
+
+namespace Cekurte\PageBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+/**
+ * PageWidgetField
+ *
+ * @ORM\Table(name="page_widget_field")
+ * @ORM\Entity
+ */
+class PageWidgetField
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"title"}, updatable=false, separator="_")
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @var \PageWidgetType
+     *
+     * @ORM\ManyToOne(targetEntity="PageWidgetType")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="page_widget_type_id", referencedColumnName="id", nullable=false)
+     * })
+     */
+    private $widgetType;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="\Cekurte\PageBundle\Entity\PageWidgetCustomField", mappedBy="widget")
+     */
+    private $widgetCustomField;
+
+
+}
